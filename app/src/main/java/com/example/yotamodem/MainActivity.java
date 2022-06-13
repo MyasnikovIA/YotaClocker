@@ -3,10 +3,12 @@ package com.example.yotamodem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -19,14 +21,20 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     protected PowerManager.WakeLock mWakeLock;
 
+    public static final String YotaUrl = "https://welcome.yota.ru/phone-tethering";
+    public static final String SputnukUrl = "https:%2F%2Fraw.githack.com%2FMyasnikovIA%2FWebSputnik%2Fmain%2Findex.html";
+
     @SuppressLint("JavascriptInterface")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        Window winManager = getWindow();
+        winManager.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        winManager.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        winManager.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        winManager.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        winManager.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
         new LockOrientation(this).lock();
 
         PowerManager pm2 = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Android android = new Android(this, webView);
         webView.addJavascriptInterface(android, "Android");
         // webView.addJavascriptInterface(new console(this, webView), "console");
+
     }
 
     @Override
@@ -58,7 +67,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        webView.loadUrl("https://welcome.yota.ru/phone-tethering?redirurl=https:%2F%2Fraw.githack.com%2FMyasnikovIA%2FWebSputnik%2Fmain%2Findex.html");
+        KeyguardManager km = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager.KeyguardLock keyguard = km.newKeyguardLock("MyApp");
+        keyguard.disableKeyguard();
+        keyguard.reenableKeyguard();
+
+        webView.loadUrl(YotaUrl+"?redirurl="+SputnukUrl);
     }
 
     @Override
@@ -70,6 +84,6 @@ public class MainActivity extends AppCompatActivity {
     // Java
     @Override
     public void onBackPressed() {
-        webView.loadUrl("https://welcome.yota.ru/phone-tethering?redirurl=https:%2F%2Fraw.githack.com%2FMyasnikovIA%2FWebSputnik%2Fmain%2Findex.html");
+        webView.loadUrl(YotaUrl+"?redirurl="+SputnukUrl);
     }
 }

@@ -32,23 +32,20 @@
         <!-- =============================================== -->
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!-- Разблокировка экрана -->
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <!-- Работа с сетью -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- получить информацию об WIFI -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- управлять состоянием WIFI -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- Запуск после перезагрузки -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <!-- Управление WIFI -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
 
 </manifest>

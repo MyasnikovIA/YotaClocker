@@ -58,9 +58,9 @@ public class WebPageViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         // после загрузки страницы, средствами JS модифицируем её
-        if (url.equals("https://welcome.yota.ru/phone-tethering?redirurl=https:%2F%2Fraw.githack.com%2FMyasnikovIA%2FWebSputnik%2Fmain%2Findex.html")) {
+        if (url.equals(MainActivity.YotaUrl+"?redirurl="+MainActivity.SputnukUrl)) {
             webWiew.loadUrl("javascript:  " + preJsCode.toString() + "   ; "); // меняем CSS верстку страницы welcome.yota.ru/phone-tethering
-            webWiew.loadUrl("javascript:  setTimeout(function(){ " + sb.toString() + "   }, 6000); "); // Находим кнопку по селектору , нажимем её и меняем фон прогрессора
+            webWiew.loadUrl("javascript:  setTimeout(function(){ " + sb.toString() + "   }, 9000); "); // Находим кнопку по селектору , нажимем её и меняем фон прогрессора
         }
     }
 
@@ -71,7 +71,7 @@ public class WebPageViewClient extends WebViewClient {
             @Override
             public void run() {
                 // если не удалось загрузить страницу, тогда переходим на страницу регистрации на 30 минут
-                webWiew.loadUrl("https://welcome.yota.ru/phone-tethering?redirurl=https:%2F%2Fraw.githack.com%2FMyasnikovIA%2FWebSputnik%2Fmain%2Findex.html");
+                webWiew.loadUrl(MainActivity.YotaUrl+"?redirurl="+MainActivity.SputnukUrl);
             }
         }.start();
     }
